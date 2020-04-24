@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using Infrastructure;
 using NorthwindLibrary;
 using NUnit.Framework;
@@ -15,12 +13,23 @@ namespace Caching
         [Test]
         public void MemoryCache()
         {
-            var categoryManager = new EntitiesManager(new MemoryCache<IEnumerable<Category>>());
+            var entitiesManager = new EntitiesManager(new MemoryCache());
 
-            for (var i = 0; i < 10; i++)
+            for (var i = 0; i < 3; i++)
             {
-                Console.WriteLine(categoryManager.GetCategories().Count());
+                Console.WriteLine(entitiesManager.GetEntities<Product>().Count());
+                Console.WriteLine(entitiesManager.GetEntities<Order>().Count());
+                Console.WriteLine(entitiesManager.GetEntities<Employee>().Count());
+
+                Thread.Sleep(100);
             }
+        }
+
+        [Test]
+        public void RedisCache()
+        {
+            
+
         }
     }
 }

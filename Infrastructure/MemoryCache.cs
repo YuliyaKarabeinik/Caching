@@ -2,21 +2,25 @@
 
 namespace Infrastructure
 {
-    public class MemoryCache<T> : ICache<T>
+    public class MemoryCache : ICache
     {
-        ObjectCache cache = MemoryCache.Default;
-        string prefix = "Cache_Categories";
+        readonly ObjectCache cache = System.Runtime.Caching.MemoryCache.Default;
+        private readonly string prefix;
 
-        public T Get(string key)
+        public MemoryCache(string prefix = "")
         {
-            var obj = cache.Get(key);
-            if (obj == null) return default(T);
-            return (T) obj;
+            this.prefix = prefix;
         }
 
-        public void Set(string key, T value)
+        public object Get(string key)
         {
-            cache.Set(key, value, ObjectCache.InfiniteAbsoluteExpiration);
+            var obj = cache.Get(prefix + key);
+            return obj;
+        }
+
+        public void Set(string key, object value)
+        {
+            cache.Set(prefix + key, value, ObjectCache.InfiniteAbsoluteExpiration);
         }
 	}
 }

@@ -7,11 +7,10 @@ namespace Caching
     [TestFixture]
     public class Task1Tests
     {
-
         [Test]
         public void MemoryCache()
         {
-            var fib = new Fibonacci(new MemoryCache<int>());
+            var fib = new Fibonacci(new MemoryCache());
             fib.GetNthFibonacci(3);
             fib.GetNthFibonacci(3);
             fib.GetNthFibonacci(10);
@@ -24,7 +23,7 @@ namespace Caching
         [Test]
         public void RedisCache()
         {
-            var fib = new Fibonacci(new RedisCache<int>("localhost"));
+            var fib = new Fibonacci(new RedisCache("localhost"));
             fib.GetNthFibonacci(3);
             fib.GetNthFibonacci(1);
             fib.GetNthFibonacci(3);

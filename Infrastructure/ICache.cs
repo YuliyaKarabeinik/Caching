@@ -1,9 +1,9 @@
 ﻿namespace Infrastructure
 {
-    public interface ICache<T>
+    public interface ICache
     {
-        T Get(string key);
+        object Get(string key);
 
-        void Set(string key, T value);
+        void Set(string key, object value);
     }
 }
