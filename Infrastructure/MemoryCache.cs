@@ -1,4 +1,5 @@
-﻿using System.Runtime.Caching;
+﻿using System;
+using System.Runtime.Caching;
 
 namespace Infrastructure
 {
@@ -18,9 +19,13 @@ namespace Infrastructure
             return obj;
         }
 
-        public void Set(string key, object value)
+        public void Set(string key, object value, DateTime expirationTime)
         {
-            cache.Set(prefix + key, value, ObjectCache.InfiniteAbsoluteExpiration);
+            var policy = new CacheItemPolicy()
+            {
+                AbsoluteExpiration = expirationTime
+            };
+            cache.Set(prefix + key, value, policy);
         }
 	}
 }

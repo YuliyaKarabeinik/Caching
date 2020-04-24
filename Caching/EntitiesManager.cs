@@ -36,7 +36,7 @@ namespace Caching
                 dbContext.Configuration.ProxyCreationEnabled = false;
                 entities = dbContext.Set<T>().ToList();
             }
-            cache.Set(key, entities);
+            cache.Set(key, entities, DateTime.Now.AddSeconds(3));
             return entities;
         }
     }

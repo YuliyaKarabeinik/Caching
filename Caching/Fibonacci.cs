@@ -30,7 +30,7 @@ namespace Caching
                 fib.Add(fib[i - 2] + fib[i - 1]);
             }
             Console.WriteLine($"{fib[n]}");
-            cache.Set(n.ToString(), fib[n]);
+            cache.Set(n.ToString(), fib[n], DateTime.Now.AddSeconds(2));
             return fib[n];
         }
     }

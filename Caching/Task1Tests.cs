@@ -1,5 +1,4 @@
-﻿using System;
-using Infrastructure;
+﻿using Infrastructure;
 using NUnit.Framework;
 
 namespace Caching

@@ -28,8 +28,16 @@ namespace Caching
         [Test]
         public void RedisCache()
         {
-            
+            var entitiesManager = new EntitiesManager(new RedisCache("localhost"));
 
+            for (var i = 0; i < 3; i++)
+            {
+                Console.WriteLine(entitiesManager.GetEntities<Customer>().Count());
+                Console.WriteLine(entitiesManager.GetEntities<Category>().Count());
+                Console.WriteLine(entitiesManager.GetEntities<Shipper>().Count());
+
+                Thread.Sleep(100);
+            }
         }
     }
 }
