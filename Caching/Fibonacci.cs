@@ -16,12 +16,12 @@ namespace Caching
         public int GetNthFibonacci(int n)
         {
             if (n < 1) throw new ArgumentException();
-            var item = cache.Get(n.ToString());
+            var item = cache.Get<int>(n.ToString());
 
-            if (item != null)
+            if (item != default)
             {
                 Console.WriteLine($"From cache: {item}");
-                return (int)item;
+                return item;
             }
 
             var fib = new List<int> { 1, 1 };
@@ -30,7 +30,7 @@ namespace Caching
                 fib.Add(fib[i - 2] + fib[i - 1]);
             }
             Console.WriteLine($"{fib[n]}");
-            cache.Set(n.ToString(), fib[n], DateTime.Now.AddSeconds(2));
+            cache.Set(n.ToString(), fib[n], DateTime.Now.AddSeconds(60));
             return fib[n];
         }
     }

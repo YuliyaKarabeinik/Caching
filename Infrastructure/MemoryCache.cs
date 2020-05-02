@@ -12,11 +12,10 @@ namespace Infrastructure
         {
             this.prefix = prefix;
         }
-
-        public object Get(string key)
+        public T Get<T>(string key)
         {
             var obj = cache.Get(prefix + key);
-            return obj;
+            return obj == null ? default(T) : (T)obj;
         }
 
         public void Set(string key, object value, DateTime expirationTime)

@@ -32,7 +32,7 @@ namespace Caching
 
             for (var i = 0; i < 3; i++)
             {
-                Console.WriteLine(entitiesManager.GetEntities<Customer>().Count());
+                Console.WriteLine(entitiesManager.GetEntities<Order>().Count());
                 Console.WriteLine(entitiesManager.GetEntities<Category>().Count());
                 Console.WriteLine(entitiesManager.GetEntities<Shipper>().Count());
 

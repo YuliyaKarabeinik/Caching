@@ -4,7 +4,7 @@ namespace Infrastructure
 {
     public interface ICache
     {
-        object Get(string key);
+        T Get<T>(string key);
 
         void Set(string key, object value, DateTime expirationTime);
     }

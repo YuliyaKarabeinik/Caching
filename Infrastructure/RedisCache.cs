@@ -7,12 +7,13 @@ namespace Infrastructure
 {
     public class RedisCache : ICache
     {
-        private ConnectionMultiplexer redisConnection;
+        private readonly ConnectionMultiplexer redisConnection;
         private readonly string prefix;
+        private Type type;
 
-        DataContractSerializer serializer = new DataContractSerializer(typeof(object));
+        DataContractSerializer serializer => new DataContractSerializer(type);
 
-        public RedisCache(string hostName, string prefix = " ")
+        public RedisCache(string hostName, string prefix = "")
         {
             this.prefix = prefix;
             redisConnection = ConnectionMultiplexer.Connect(new ConfigurationOptions()
@@ -22,15 +23,17 @@ namespace Infrastructure
             });
         }
 
-        public object Get(string key)
+        public T Get<T>(string key)
         {
+            type = typeof(T);
             var db = redisConnection.GetDatabase();
             byte[] s = db.StringGet(prefix + key);
-            return s == null ? null : serializer.ReadObject(new MemoryStream(s));
+            return s == null ? default(T) : (T)serializer.ReadObject(new MemoryStream(s));
         }
 
         public void Set(string key, object value, DateTime expirationTime)
         {
+            type = value.GetType();
             var db = redisConnection.GetDatabase();
 
             if (value == null)
@@ -41,7 +44,7 @@ namespace Infrastructure
             {
                 var stream = new MemoryStream();
                 serializer.WriteObject(stream, value);
-                db.StringSet(key, stream.ToArray(), expirationTime - DateTime.Now);
+                db.StringSet(key, stream.ToArray());
             }
         }
     }

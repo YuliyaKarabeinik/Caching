@@ -22,7 +22,7 @@ namespace Caching
         {
             var key = typeof(T).ToString();
 
-            var entities = (List<T>)cache.Get(key);
+            var entities = cache.Get<IEnumerable<T>>(key);
 
             if (entities != null)
             {

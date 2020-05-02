@@ -12,7 +12,6 @@ namespace Caching
             var fib = new Fibonacci(new MemoryCache());
             fib.GetNthFibonacci(3);
             fib.GetNthFibonacci(3);
-            fib.GetNthFibonacci(10);
             fib.GetNthFibonacci(2);
             fib.GetNthFibonacci(1);
             fib.GetNthFibonacci(1);
@@ -23,10 +22,10 @@ namespace Caching
         public void RedisCache()
         {
             var fib = new Fibonacci(new RedisCache("localhost"));
+            fib.GetNthFibonacci(4);
+            fib.GetNthFibonacci(2);
             fib.GetNthFibonacci(3);
-            fib.GetNthFibonacci(1);
-            fib.GetNthFibonacci(3);
-            fib.GetNthFibonacci(1);
+            fib.GetNthFibonacci(4);
         }
     }
 }
